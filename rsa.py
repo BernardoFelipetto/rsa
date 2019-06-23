@@ -4,19 +4,19 @@ import hashlib
 import math
 import random
 
-is_prime = False
-
 def generate_large_prime():
+    is_prime = False
     while not is_prime:
         big_number = random.getrandbits(1024)
-        
-
-
-
+        is_prime = fermat(big_number)
     return big_number
 
+def fermat(x):
+    return pow(2, x-1, x) == 1
+
 if __name__ == "__main__":
-    prime_number = generate_large_prime()
+    p_prime_number = generate_large_prime()
+    q_prime_number = generate_large_prime()
 
     print(prime_number)
 
