@@ -7,7 +7,7 @@ import random
 def generate_large_prime():
     is_prime = False
     while not is_prime:
-        big_number = random.getrandbits(1024)
+        big_number = random.getrandbits(5)
         is_prime = fermat(big_number)
     return big_number
 
@@ -18,9 +18,13 @@ if __name__ == "__main__":
     p_prime_number = generate_large_prime()
     q_prime_number = generate_large_prime()
 
-    print(prime_number)
+    relative_prime_number = (p_prime_number - 1) * (q_prime_number - 1)
 
+    print("Prime number P", p_prime_number)
 
+    print("Prime number Q", q_prime_number)
+    
+    print("Relative Primes", relative_prime_number)
 
 
 # 1 - calcula 2 numeros primos grandes: p e q
