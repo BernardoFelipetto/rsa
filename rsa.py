@@ -3,28 +3,98 @@ import sys
 import hashlib
 import math
 import random
+from decimal import Decimal
+
 
 def generate_large_prime():
     is_prime = False
     while not is_prime:
-        big_number = random.getrandbits(5)
+        big_number = random.getrandbits(1024)
         is_prime = fermat(big_number)
     return big_number
 
 def fermat(x):
     return pow(2, x-1, x) == 1
 
+def calculate_cypher_key(relative_prime_number):
+    #escolher um numero aleatorio maior q 1 e menor q relative_prime_number
+    #calcular o computeGCD dele
+    #se for igual a 1 retorna o numero calculado
+    is_cypher = False
+    for x in range(2, relative_prime_number-1):
+        is_cypher = computeGCD(x, relative_prime_number)
+        if(is_cypher):
+            return x
+
+    #while not is_cypher:
+    #    cypher_key = random.randrange(2, relative_prime_number-1)
+    #    is_cypher = computeGCD(cypher_key, relative_prime_number)
+    #return cypher_key
+
+def calculate_decypher_key(module, relative_prime_number, cypher_key):
+
+
+    #(this-1 mod m).
+    #e.modInverse(euler);
+    #cypherkey elevado na menos 1 mod module
+
+    # d = e.modInverse(euler);
+
+    d = pow(cypher_key, -1)
+
+    d2 = Decimal(d % module)
+
+    is_decypher = (d2 * cypher_key) % relative_prime_number
+    if(is_decypher == 1):
+        return x
+
+
+
+    #while not is_decypher:
+    #    decypher_key = random.randrange(0, module)
+    #    is_decypher = (cypher_key * decypher_key) % relative_prime_number  == 1
+    #return decypher_key
+
+def computeGCD(x, y): 
+   while(y): 
+       x, y = y, x % y
+   return x == 1
+
+
 if __name__ == "__main__":
-    p_prime_number = generate_large_prime()
-    q_prime_number = generate_large_prime()
 
-    relative_prime_number = (p_prime_number - 1) * (q_prime_number - 1)
+    message = 9
 
-    print("Prime number P", p_prime_number)
-
-    print("Prime number Q", q_prime_number)
     
-    print("Relative Primes", relative_prime_number)
+    p_prime_number = generate_large_prime()
+    print("Prime number P: ", p_prime_number)
+    
+    q_prime_number = generate_large_prime()
+    print("Prime number Q: ", q_prime_number)
+
+    module = p_prime_number * q_prime_number #N
+
+    relative_prime_number = (p_prime_number - 1) * (q_prime_number - 1) #ROLA DE N
+    print("Relative Primes: ", relative_prime_number)
+
+    cypher_key = calculate_cypher_key(relative_prime_number)#E
+
+    print("TERMINOU CYPHER KEY")
+
+    decypher_key = calculate_decypher_key(module, relative_prime_number, cypher_key)#D
+
+    print("TERMINOU DECYPHER KEY")
+
+
+    print("Public Key: ", cypher_key, " and ", module)
+
+    cypher_text = pow(message, cypher_key, module)
+
+    print("Cypher Text: ", cypher_text)
+
+    decypher_text = pow(cypher_text, decypher_key, module)
+
+    print("Decypher Text", decypher_text)
 
 
 # 1 - calcula 2 numeros primos grandes: p e q
