@@ -20,14 +20,22 @@ def calculate_cypher_key(relative_prime_number):
     #escolher um numero aleatorio maior q 1 e menor q relative_prime_number
     #calcular o computeGCD dele
     #se for igual a 1 retorna o numero calculado
-    is_cypher = False
-    for x in range(2, relative_prime_number-1):
-        is_cypher, a, b = computeGCD(x, relative_prime_number)
+
+    is_cypher = 0
+    while is_cypher != 1:
+        cypher_key = random.randrange(pow(2,1000), relative_prime_number)
+        is_cypher, a, b = math.gcd(cypher_key, relative_prime_number)
         if(is_cypher == 1):
-            return x
+            return cypher_key
+
+
+    #for x in range(pow(2, 1000), relative_prime_number):
+    #    is_cypher, a, b = computeGCD(x, relative_prime_number)
+    #    if(is_cypher == 1):
+    #        return x
 
     #while not is_cypher:
-    #    cypher_key = random.randrange(2, relative_prime_number-1)
+    #    cypher_key = random.randrange(2, relative_prime_number)
     #    is_cypher = computeGCD(cypher_key, relative_prime_number)
     #return cypher_key
 
@@ -94,12 +102,8 @@ if __name__ == "__main__":
 
     cypher_key = calculate_cypher_key(relative_prime_number)#E
 
-    print("TERMINOU CYPHER KEY")
 
     decypher_key = calculate_decypher_key(module, relative_prime_number, cypher_key)#D
-
-    print("TERMINOU DECYPHER KEY")
-
 
     print("Public Key: ", cypher_key, " and ", module)
 
