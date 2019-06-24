@@ -20,11 +20,12 @@ def calculate_cypher_key(relative_prime_number):
     #escolher um numero aleatorio maior q 1 e menor q relative_prime_number
     #calcular o computeGCD dele
     #se for igual a 1 retorna o numero calculado
+    sys.setrecursionlimit(1000000)
 
     is_cypher = 0
     while is_cypher != 1:
         cypher_key = random.randrange(pow(2,1000), relative_prime_number)
-        is_cypher, a, b = math.gcd(cypher_key, relative_prime_number)
+        is_cypher, a, b = computeGCD(cypher_key, relative_prime_number)
         if(is_cypher == 1):
             return cypher_key
 
@@ -41,6 +42,7 @@ def calculate_cypher_key(relative_prime_number):
 
 def calculate_decypher_key(module, relative_prime_number, cypher_key):
 
+    sys.setrecursionlimit(1000000)
 
     #(this-1 mod m).
     #e.modInverse(euler);
