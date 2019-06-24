@@ -22,8 +22,8 @@ def calculate_cypher_key(relative_prime_number):
     #se for igual a 1 retorna o numero calculado
     is_cypher = False
     for x in range(2, relative_prime_number-1):
-        is_cypher = computeGCD(x, relative_prime_number)
-        if(is_cypher):
+        is_cypher, a, b = computeGCD(x, relative_prime_number)
+        if(is_cypher == 1):
             return x
 
     #while not is_cypher:
@@ -40,13 +40,11 @@ def calculate_decypher_key(module, relative_prime_number, cypher_key):
 
     # d = e.modInverse(euler);
 
-    d = pow(cypher_key, -1)
+    d = modinv(cypher_key, relative_prime_number)
 
-    d2 = Decimal(d % module)
-
-    is_decypher = (d2 * cypher_key) % relative_prime_number
+    is_decypher = (d * cypher_key) % relative_prime_number
     if(is_decypher == 1):
-        return x
+        return d
 
 
 
@@ -55,10 +53,27 @@ def calculate_decypher_key(module, relative_prime_number, cypher_key):
     #    is_decypher = (cypher_key * decypher_key) % relative_prime_number  == 1
     #return decypher_key
 
-def computeGCD(x, y): 
-   while(y): 
-       x, y = y, x % y
-   return x == 1
+#def computeGCD(x, y): 
+#   while(y): 
+#       x, y = y, x % y
+#   return x == 1
+
+
+def computeGCD(a, b):
+    if a == 0:
+        return (b, 0, 1)
+    else:
+        g, y, x = computeGCD(b % a, a)
+        return (g, x - (b // a) * y, y)
+
+def modinv(a, m):
+    g, x, y = computeGCD(a, m)
+    if g != 1:
+        raise Exception('modular inverse does not exist')
+    else:
+        return x % m
+
+
 
 
 if __name__ == "__main__":
