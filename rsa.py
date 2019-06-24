@@ -5,6 +5,8 @@ import math
 import random
 from decimal import Decimal
 
+count = 0
+
 
 def generate_large_prime():
     is_prime = False
@@ -70,6 +72,8 @@ def calculate_decypher_key(module, relative_prime_number, cypher_key):
 
 
 def computeGCD(a, b):
+    global count
+    count = count + 1
     if a == 0:
         return (b, 0, 1)
     else:
@@ -90,6 +94,7 @@ if __name__ == "__main__":
 
     message = 9
 
+
     
     p_prime_number = generate_large_prime()
     print("Prime number P: ", p_prime_number)
@@ -104,8 +109,11 @@ if __name__ == "__main__":
 
     cypher_key = calculate_cypher_key(relative_prime_number)#E
 
+    print ("count AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", count)
 
     decypher_key = calculate_decypher_key(module, relative_prime_number, cypher_key)#D
+
+    print ("count BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB", count)
 
     print("Public Key: ", cypher_key, " and ", module)
 
