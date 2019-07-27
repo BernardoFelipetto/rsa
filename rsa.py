@@ -5,11 +5,6 @@ import math
 import random
 import binascii
 
-
-###
-# Para rodar apenas digite py -3 rsa.py no terminal
-###
-
 def generate_large_prime():
     is_prime = False
     while not is_prime:
